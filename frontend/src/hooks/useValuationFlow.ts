@@ -4,7 +4,7 @@ import { autoValuateVehicle, loginDemo, loginUser, registerUser, valuateVehicle 
 import type { ValuationResult, VehicleInput } from '../types';
 
 export function useValuationFlow() {
-  const [token, setToken] = useState(localStorage.getItem('token') || 'demo-token');
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [vehicle, setVehicle] = useState<VehicleInput>(initialVehicle);
   const [result, setResult] = useState<ValuationResult | null>(null);
   const [loading, setLoading] = useState(false);

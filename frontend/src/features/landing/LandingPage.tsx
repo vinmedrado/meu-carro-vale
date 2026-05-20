@@ -3,16 +3,21 @@ import { Button } from '../../components/ui';
 import { Logo } from '../../components/branding/Logo';
 
 export function LandingPage({ onDemo, loading = false, error = '' }: { onDemo: () => void; loading?: boolean; error?: string }) {
+  function handleStartDemo() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh_token');
+  onDemo();
+}
   return (
     <main className="mcv-landing-final">
-      <header className="mcv-landing-header"><Logo /><button onClick={onDemo} disabled={loading}>Avaliar meu veículo</button></header>
+      <header className="mcv-landing-header"><Logo /><button onClick={handleStartDemo} disabled={loading}>Avaliar meu veículo</button></header>
       <section className="mcv-landing-hero">
         <div className="mcv-hero-copy">
           <p>Seu veículo como um patrimônio</p>
           <h1>Descubra quanto seu carro realmente vale.</h1>
           <span>Use dados de mercado, FIPE e comparáveis para negociar com mais segurança.</span>
           {error ? <div className="mcv-error"><AlertTriangle size={16}/>{error}</div> : null}
-          <div className="mcv-hero-actions"><Button onClick={onDemo} disabled={loading}>{loading ? <Loader2 className="animate-spin" size={16}/> : null} Avaliar meu veículo <ArrowRight size={16}/></Button><a href="#como-funciona">Entender antes de vender</a></div>
+          <div className="mcv-hero-actions"><Button onClick={handleStartDemo} disabled={loading}>{loading ? <Loader2 className="animate-spin" size={16}/> : null} Avaliar meu veículo <ArrowRight size={16}/></Button><a href="#como-funciona">Entender antes de vender</a></div>
         </div>
         <LaudoMockup />
       </section>
@@ -42,7 +47,7 @@ export function LandingPage({ onDemo, loading = false, error = '' }: { onDemo: (
         <div>
           <div className="mcv-section-title"><p>Produto brasileiro</p><h2>Feito para a realidade de venda nacional.</h2></div>
           <p>O Meu Carro Vale organiza dados de referência, praça, quilometragem e comparáveis em uma leitura clara para proprietários, lojas e consultores automotivos.</p>
-          <Button onClick={onDemo} disabled={loading}>Avaliar meu veículo</Button>
+          <Button onClick={handleStartDemo} disabled={loading}>Avaliar meu veículo</Button>
         </div>
       </section>
     </main>
