@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-meu_carro_vale}
+      POSTGRES_USER: ${POSTGRES_USER:-meu_carro_vale}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-meu_carro_vale}
+    ports:
+      - "5434:5432"
+    volumes:
+      - meu_carro_vale_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-meu_carro_vale}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6381:6379"
+
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-meu_carro_vale}:${POSTGRES_PASSWORD:-meu_carro_vale}@postgres:5432/${POSTGRES_DB:-meu_carro_vale}
+    ports:
+      - "8010:8010"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_URL: http://localhost:8010
+    ports:
+      - "5180:5180"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  meu_carro_vale_pg:

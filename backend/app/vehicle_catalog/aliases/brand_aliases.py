@@ -1,0 +1,17 @@
+BRAND_ALIASES = {
+    "chevrolet": ["gm", "general motors", "chevy", "chev", "chevrolet"],
+    "volkswagen": ["vw", "volks", "wolks", "wolkswagen", "volkswagen"],
+    "mercedes-benz": ["mercedes", "mb", "mercedes benz", "mercedes-benz"],
+    "land rover": ["range rover", "land rover"],
+    "fiat": ["fca", "fca fiat", "fiat automoveis", "fiat automóveis", "fiat"],
+    "bmw": ["bmw", "bmw motors", "bmw brasil"],
+    "toyota": ["toyta", "toyota"],
+    "honda": ["hoda", "honda"],
+    "renault": ["reno", "renault"],
+    "hyundai": ["hiunday", "hyunday", "hyundai motor", "hyundai"],
+    "peugeot": ["pegeout", "peugeot"],
+    "citroën": ["citroen", "citroën", "citröen"],
+    "nissan": ["nissam", "nissan"],
+    "mitsubishi": ["mit", "mitsubish", "mitsubishi"],
+    "jeep": ["jeep"],
+}

@@ -1,0 +1,4 @@
+marca,modelo,versao,ano,km,preco,cidade,estado,fonte,url,combustivel,cambio
+Chevrolet,Tracker,Premier 1.2 Turbo,2023,32000,118900,Santo André,SP,CSV,https://exemplo.com/1,Flex,Automático
+Chevrolet,Tracker,Premier 1.2 Turbo,2023,41000,116500,São Paulo,SP,CSV,https://exemplo.com/2,Flex,Automático
+Chevrolet,Tracker,Premier 1.2 Turbo,2023,52000,114900,Campinas,SP,CSV,https://exemplo.com/3,Flex,Automático

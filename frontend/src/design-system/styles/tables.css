@@ -1,0 +1,2 @@
+.mcv-table-wrap{overflow-x:auto;margin-top:14px}.mcv-exec-table{width:100%;border-collapse:collapse;min-width:640px}.mcv-exec-table th{padding:10px 8px;border-bottom:1px solid var(--mcv-border);color:var(--mcv-secondary);font-size:11px;text-align:left;text-transform:uppercase;letter-spacing:.08em}.mcv-exec-table td{padding:11px 8px;border-bottom:1px solid var(--mcv-border);font-size:13px}
+@media (max-width:720px){.mcv-exec-table{min-width:560px}}

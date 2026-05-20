@@ -1,0 +1,7 @@
+title,price,brand,model,version,year,mileage,city,state,transmission,fuel,url,source
+Toyota Corolla XEi 2.0 Flex,128900,Toyota,Corolla,XEi 2.0,2021,54000,São Paulo,SP,automático,flex,https://exemplo.com/corolla-xei-2021-1,csv_real
+Toyota Corolla XEi 2.0 Flex,126500,Toyota,Corolla,XEi 2.0,2021,61000,Campinas,SP,automático,flex,https://exemplo.com/corolla-xei-2021-2,csv_real
+Toyota Corolla XEi 2.0 Flex,132000,Toyota,Corolla,XEi 2.0,2022,42000,Santos,SP,automático,flex,https://exemplo.com/corolla-xei-2022,csv_real
+Honda Civic Touring 1.5 Turbo,139900,Honda,Civic,Touring,2020,58000,São Paulo,SP,automático,flex,https://exemplo.com/civic-touring-2020,csv_real
+Jeep Compass Limited,151900,Jeep,Compass,Limited,2021,52000,Curitiba,PR,automático,flex,https://exemplo.com/compass-limited-2021,csv_real
+BMW 320i Sport GP,219900,BMW,320i,Sport GP,2021,39000,São Paulo,SP,automático,gasolina,https://exemplo.com/bmw-320i-2021,csv_real
