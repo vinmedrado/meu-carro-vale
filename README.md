@@ -34,7 +34,7 @@ screenshots/         capturas do produto
 
 ![Meu Carro Vale demo](assets/demo/demo.gif)
 
-![Portfolio screenshot](https://raw.githubusercontent.com/vinmedrado/portfolio/main/images/meucarrovale.png)
+![Meu Carro Vale screenshot](https://raw.githubusercontent.com/vinmedrado/portfolio/main/images/meucarrovale.png)
 
 ## Funcionalidades
 
