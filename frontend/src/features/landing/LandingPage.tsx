@@ -4,7 +4,7 @@ import { Button } from '../../components/ui';
 import { Logo } from '../../components/branding/Logo';
 import { BRAND_FALLBACK_LOGOS, BRAND_LOGOS } from '../../components/vehicle/VehicleHero';
 
-const brands = ['Toyota','Honda','Volkswagen','Chevrolet','Fiat','Jeep','Hyundai','BMW','Ford','Mercedes','Yamaha'];
+const brands = ['Toyota','Honda','Volkswagen','Chevrolet','Fiat','Jeep','Hyundai','BMW','Audi','Ford','Mercedes','Yamaha'];
 const rows = [
   ['Dados de mercado real', '✅', '❌', 'Parcial'],
   ['Anúncios ativos', '✅', '❌', '❌'],

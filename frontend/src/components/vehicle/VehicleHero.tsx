@@ -14,6 +14,10 @@ function logo(label: string, accent = '#166F52') {
   return svgData(`<svg xmlns="http://www.w3.org/2000/svg" width="160" height="96" viewBox="0 0 160 96"><rect width="160" height="96" rx="24" fill="#fff"/><rect x="1.5" y="1.5" width="157" height="93" rx="22.5" fill="none" stroke="#E4E7EC" stroke-width="3"/><circle cx="80" cy="42" r="25" fill="#F2F4F7"/><text x="80" y="51" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="${accent}">${initials}</text><text x="80" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#475467">${label}</text></svg>`);
 }
 
+function asset(path: string) {
+  return `${import.meta.env.BASE_URL}${path}`.replace(/\/{2,}/g, '/');
+}
+
 export const BRAND_FALLBACK_LOGOS: Record<string, string> = {
   Toyota: logo('Toyota', '#C1121F'),
   Honda: logo('Honda', '#B42318'),
@@ -27,21 +31,23 @@ export const BRAND_FALLBACK_LOGOS: Record<string, string> = {
   Mercedes: logo('Mercedes', '#101828'),
   Yamaha: logo('Yamaha', '#B42318'),
   Renault: logo('Renault', '#B8871D'),
+  Audi: logo('Audi', '#101828'),
 };
 
 export const BRAND_LOGOS: Record<string, string> = {
-  Toyota: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/toyota.svg',
-  Honda: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/honda.svg',
-  Volkswagen: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/volkswagen.svg',
-  Chevrolet: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/chevrolet.svg',
-  Fiat: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/fiat.svg',
-  Jeep: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jeep.svg',
-  Ford: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/ford.svg',
-  Hyundai: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/hyundai.svg',
-  BMW: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/bmw.svg',
-  Mercedes: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/mercedes.svg',
-  Yamaha: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/yamahamotorcorporation.svg',
-  Renault: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/renault.svg',
+  Toyota: asset('brand-logos/toyota.svg'),
+  Honda: asset('brand-logos/honda.svg'),
+  Volkswagen: asset('brand-logos/volkswagen.svg'),
+  Chevrolet: asset('brand-logos/chevrolet.svg'),
+  Fiat: asset('brand-logos/fiat.svg'),
+  Jeep: asset('brand-logos/jeep.svg'),
+  Ford: asset('brand-logos/ford.svg'),
+  Hyundai: asset('brand-logos/hyundai.svg'),
+  BMW: asset('brand-logos/bmw.svg'),
+  Mercedes: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg',
+  Yamaha: asset('brand-logos/yamaha.svg'),
+  Renault: asset('brand-logos/renault.svg'),
+  Audi: asset('brand-logos/audi.svg'),
 };
 
 export interface VehicleHeroProps { brand: string; model: string; year: number; imageUrl?: string; }
