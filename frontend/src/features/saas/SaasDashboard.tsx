@@ -8,7 +8,7 @@ type ReportsResponse = Report[] | { locked?: boolean; message?: string; items?: 
 type Vehicle = { id: number; veiculo: string; ano: number; km: number; cidade: string; estado: string };
 function scoreFromReports(reports: Report[]) {
   if (!reports.length) return { liquidity: 0, confidence: 0, premium: 'Aguardando laudos' };
-  const confidence = Math.round(reports.reduce((acc, r) => acc + (Number(String(r.confianca).replace(/\D/g, '')) || 78), 0) / reports.length);
+  const confidence = Math.round(reports.reduce((acc, r) => acc + (Number(String(r.confianca).match(/\d+/)?.[0]) || 78), 0) / reports.length);
   const strongLiquidity = reports.filter((r) => /boa|alta|rápida|aquecid/i.test(r.liquidez || '')).length;
   const liquidity = Math.round(62 + (strongLiquidity / reports.length) * 30);
   return { liquidity, confidence, premium: liquidity >= 78 ? 'Carteira com boa liquidez' : 'Carteira em calibração' };
