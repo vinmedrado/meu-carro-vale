@@ -138,6 +138,9 @@ export function useValuationFlow() {
           model: "Agile",
           version: "LTZ 1.4 Flex",
           year: 2013,
+          km: 82000,
+          city: "São Paulo",
+          state: "SP",
         },
         customer_valuation: {
           vehicle_label: "Chevrolet Agile LTZ 1.4 Flex 2013",

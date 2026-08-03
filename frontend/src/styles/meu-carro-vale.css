@@ -3072,6 +3072,502 @@ body,.mcv-app,.mcv-app-clean{background:var(--mcv-bg)!important;color:var(--mcv-
 }
 
 /* ==========================================================
+   PORTFOLIO FINAL OVERRIDE - must stay at the end of the file.
+   ========================================================== */
+:root {
+  --portfolio-bg: #f5f7f8;
+  --portfolio-card: #ffffff;
+  --portfolio-text: #101828;
+  --portfolio-muted: #667085;
+  --portfolio-line: #e4e7ec;
+  --portfolio-green: #166f52;
+  --portfolio-green-dark: #0f4938;
+  --portfolio-gold: #d8a83f;
+  --portfolio-shadow: 0 14px 36px rgba(16, 24, 40, .07);
+}
+
+html,
+body,
+#root,
+.mcv-app-clean,
+.mcv-premium-page {
+  background: var(--portfolio-bg) !important;
+  color: var(--portfolio-text) !important;
+}
+
+.mcv-premium-page {
+  display: block !important;
+}
+
+.mcv-clean-topbar,
+.mcv-premium-header {
+  background: rgba(255, 255, 255, .96) !important;
+  border-bottom: 1px solid var(--portfolio-line) !important;
+  box-shadow: 0 1px 0 rgba(16, 24, 40, .04) !important;
+}
+
+.mcv-clean-nav a,
+.mcv-clean-logout,
+.mcv-premium-header button {
+  background: #fff !important;
+  color: #344054 !important;
+  border: 1px solid var(--portfolio-line) !important;
+  box-shadow: none !important;
+}
+
+.mcv-premium-header button,
+.btn-primary,
+.mcv-download-top,
+.mcv-report-buttons-clean button {
+  background: var(--portfolio-green) !important;
+  border-color: var(--portfolio-green) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 22px rgba(22, 111, 82, .16) !important;
+}
+
+.mcv-premium-hero {
+  width: min(1080px, calc(100% - 36px)) !important;
+  min-height: auto !important;
+  margin: 0 auto !important;
+  padding: 76px 0 58px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 390px !important;
+  gap: 64px !important;
+  align-items: center !important;
+}
+
+.mcv-premium-copy h1 {
+  max-width: 610px !important;
+  color: var(--portfolio-text) !important;
+  font-size: clamp(44px, 5.7vw, 68px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: 0 !important;
+}
+
+.mcv-premium-copy > span {
+  max-width: 560px !important;
+  color: var(--portfolio-muted) !important;
+  font-size: 18px !important;
+  line-height: 1.55 !important;
+}
+
+.mcv-kicker,
+.mcv-premium-copy p,
+.mcv-premium-title p,
+.mcv-card-heading span {
+  color: var(--portfolio-green) !important;
+  letter-spacing: .11em !important;
+}
+
+.mcv-terminal-card,
+.mcv-premium-steps article,
+.mcv-compare,
+.mcv-brand-grid button,
+.mcv-wizard-premium-shell,
+.mcv-result-shell-clean,
+.mcv-saas-summary > div,
+.mcv-dashboard-intelligence,
+.mcv-saas-table-card,
+.mcv-index-card,
+.mcv-price-range-card,
+.mcv-lost-card,
+.mcv-real-comparables-card,
+.mcv-distribution-card,
+.mcv-liquidity-card,
+.mcv-insights-card,
+.mcv-source-truth-card,
+.mcv-metric-clean,
+.mcv-laudo-value-card {
+  background: var(--portfolio-card) !important;
+  color: var(--portfolio-text) !important;
+  border: 1px solid var(--portfolio-line) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--portfolio-shadow) !important;
+}
+
+.mcv-terminal-card {
+  padding: 28px !important;
+}
+
+.mcv-terminal-card h2 {
+  color: var(--portfolio-text) !important;
+  font-size: 44px !important;
+  letter-spacing: 0 !important;
+  font-family: inherit !important;
+}
+
+.mcv-terminal-card b {
+  color: var(--portfolio-gold) !important;
+  background: #fffbeb !important;
+}
+
+.mcv-terminal-card span,
+.mcv-terminal-card p,
+.mcv-terminal-card footer,
+.mcv-premium-steps p,
+.mcv-result-header-clean span,
+.mcv-step-title-premium p,
+.mcv-wizard-heading span,
+.mcv-preview-summary p,
+.mcv-preview-summary small,
+.mcv-real-comparables-card h3,
+.mcv-empty-premium p,
+.mcv-liquidity-card p,
+.mcv-insights-card p,
+.mcv-saas-table-card p,
+.mcv-saas-summary span,
+.mcv-saas-summary small {
+  color: var(--portfolio-muted) !important;
+}
+
+.mcv-premium-section {
+  width: min(1080px, calc(100% - 36px)) !important;
+  padding: 42px 0 !important;
+}
+
+.mcv-premium-title h2 {
+  color: var(--portfolio-text) !important;
+  font-size: clamp(30px, 4vw, 44px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: 0 !important;
+}
+
+.mcv-premium-steps {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.mcv-premium-steps article {
+  min-height: 150px !important;
+  padding: 22px !important;
+  overflow: hidden !important;
+}
+
+.mcv-premium-steps b {
+  color: rgba(216, 168, 63, .78) !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+}
+
+.mcv-premium-steps h3,
+.mcv-result-header-clean h2,
+.mcv-wizard-heading h1,
+.mcv-step-title-premium h2,
+.mcv-index-card h3,
+.mcv-saas-table-card h2,
+.mcv-laudo-content h3 {
+  color: var(--portfolio-text) !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+.mcv-compare table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #fff !important;
+}
+
+.mcv-compare th,
+.mcv-compare td {
+  padding: 14px 16px !important;
+  color: var(--portfolio-text) !important;
+  border-bottom: 1px solid var(--portfolio-line) !important;
+  background: #fff !important;
+}
+
+.mcv-compare th {
+  background: #f9fafb !important;
+  color: #475467 !important;
+}
+
+.mcv-brand-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.mcv-brand-grid img,
+.mcv-brand-grid-premium img,
+.mcv-vehicle-hero-overlay img {
+  display: none !important;
+}
+
+.mcv-brand-grid button {
+  min-height: 76px !important;
+  padding: 14px !important;
+}
+
+.mcv-brand-grid button svg,
+.mcv-brand-grid-premium button svg {
+  color: var(--portfolio-green) !important;
+}
+
+.mcv-clean-workspace {
+  width: min(1080px, 100%) !important;
+}
+
+.mcv-wizard-premium-shell {
+  overflow: hidden !important;
+}
+
+.mcv-wizard-heading,
+.mcv-result-header-clean {
+  background: #fff !important;
+  color: var(--portfolio-text) !important;
+  border-bottom: 1px solid var(--portfolio-line) !important;
+}
+
+.mcv-wizard-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 300px !important;
+  gap: 18px !important;
+  padding: 18px !important;
+  background: #f9fafb !important;
+}
+
+.mcv-wizard-panel,
+.mcv-step-card-clean,
+.mcv-wizard-preview,
+.mcv-search-strip,
+.mcv-options-panel,
+.mcv-color-row {
+  background: #fff !important;
+  color: var(--portfolio-text) !important;
+  border: 1px solid var(--portfolio-line) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+
+.mcv-wizard-panel {
+  padding: 20px !important;
+}
+
+.mcv-type-tabs button,
+.mcv-chip-group-premium button,
+.mcv-brand-grid-premium button,
+.mcv-wizard-step-tabs button,
+.mcv-field-premium input,
+.mcv-field-premium select,
+.mcv-search-box-clean {
+  background: #fff !important;
+  color: var(--portfolio-text) !important;
+  border: 1px solid var(--portfolio-line) !important;
+  box-shadow: none !important;
+}
+
+.mcv-type-tabs button.active,
+.mcv-chip-group-premium button.active,
+.mcv-brand-grid-premium button.active,
+.mcv-wizard-step-tabs button.active {
+  background: #ecfdf3 !important;
+  color: var(--portfolio-green) !important;
+  border-color: #abefc6 !important;
+}
+
+.mcv-field-premium span,
+.mcv-chip-group-premium > span,
+.mcv-search-strip > span,
+.mcv-options-panel > span,
+.mcv-color-row > span {
+  color: #475467 !important;
+}
+
+.mcv-vehicle-hero-premium {
+  min-height: 220px !important;
+  background: linear-gradient(135deg, #eef4f1, #ffffff) !important;
+  border: 1px solid var(--portfolio-line) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+.mcv-vehicle-hero-premium > img {
+  display: none !important;
+}
+
+.mcv-vehicle-hero-fallback {
+  display: grid !important;
+  place-items: center !important;
+  color: rgba(22, 111, 82, .45) !important;
+}
+
+.mcv-vehicle-hero-overlay {
+  background: rgba(255,255,255,.92) !important;
+  color: var(--portfolio-text) !important;
+  border: 1px solid var(--portfolio-line) !important;
+}
+
+.mcv-result-body-clean {
+  background: #f9fafb !important;
+}
+
+.mcv-dashboard-premium-grid {
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  gap: 16px !important;
+}
+
+.mcv-dashboard-topline,
+.mcv-dashboard-split,
+.mcv-dashboard-bottom {
+  display: grid !important;
+  gap: 16px !important;
+}
+
+.mcv-dashboard-topline {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.mcv-dashboard-split,
+.mcv-dashboard-bottom {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.mcv-dashboard-main,
+.mcv-dashboard-sidebar {
+  display: grid !important;
+  gap: 16px !important;
+}
+
+.mcv-index-card,
+.mcv-price-range-card,
+.mcv-lost-card,
+.mcv-real-comparables-card,
+.mcv-distribution-card,
+.mcv-liquidity-card,
+.mcv-insights-card {
+  min-height: 0 !important;
+  padding: 18px !important;
+}
+
+.mcv-lost-card strong,
+.mcv-price-band strong,
+.mcv-metric-clean strong,
+.mcv-saas-summary strong,
+.mcv-laudo-value-card strong {
+  color: var(--portfolio-text) !important;
+  font-family: inherit !important;
+  letter-spacing: 0 !important;
+}
+
+.mcv-lost-card strong {
+  font-size: 34px !important;
+  color: var(--portfolio-green) !important;
+}
+
+.mcv-result-tabs-clean {
+  background: #fff !important;
+  border-bottom: 1px solid var(--portfolio-line) !important;
+}
+
+.mcv-result-tabs-clean button {
+  background: #fff !important;
+  color: #475467 !important;
+  border: 1px solid var(--portfolio-line) !important;
+}
+
+.mcv-result-tabs-clean button.active {
+  background: var(--portfolio-green) !important;
+  color: #fff !important;
+  border-color: var(--portfolio-green) !important;
+}
+
+.mcv-real-comparable-item,
+.mcv-empty-premium,
+.mcv-insights-card li {
+  background: #f9fafb !important;
+  color: var(--portfolio-text) !important;
+  border: 1px solid var(--portfolio-line) !important;
+  border-radius: 12px !important;
+}
+
+.mcv-dashboard-intelligence {
+  grid-template-columns: 1.2fr .8fr .8fr !important;
+}
+
+.mcv-dashboard-intelligence article strong,
+.mcv-dashboard-intelligence b {
+  color: var(--portfolio-text) !important;
+}
+
+.mcv-dashboard-intelligence article p {
+  color: var(--portfolio-muted) !important;
+}
+
+.mcv-saas-area {
+  display: grid !important;
+  gap: 16px !important;
+}
+
+.mcv-saas-summary {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.mcv-saas-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.mcv-saas-table-card th {
+  background: #f2f4f7 !important;
+  color: #475467 !important;
+}
+
+.mcv-saas-table-card td {
+  color: var(--portfolio-text) !important;
+  background: #fff !important;
+}
+
+.mcv-premium-footer {
+  background: transparent !important;
+  color: var(--portfolio-muted) !important;
+}
+
+@media (max-width: 980px) {
+  .mcv-premium-hero,
+  .mcv-wizard-grid,
+  .mcv-dashboard-premium-grid,
+  .mcv-dashboard-topline,
+  .mcv-dashboard-split,
+  .mcv-dashboard-bottom,
+  .mcv-dashboard-intelligence,
+  .mcv-saas-summary,
+  .mcv-saas-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mcv-premium-steps,
+  .mcv-brand-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .mcv-premium-hero {
+    width: min(100% - 28px, 1080px) !important;
+    padding: 44px 0 !important;
+    gap: 26px !important;
+  }
+
+  .mcv-premium-copy h1 {
+    font-size: 40px !important;
+  }
+
+  .mcv-premium-steps,
+  .mcv-brand-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mcv-premium-section {
+    width: min(100% - 28px, 1080px) !important;
+  }
+}
+
+/* ==========================================================
    FINAL PORTFOLIO POLISH
    Clean SaaS product layout for the public portfolio/demo.
    ========================================================== */
@@ -3721,5 +4217,266 @@ body {
   .mcv-premium-actions .btn,
   .mcv-premium-actions a {
     width: 100%;
+  }
+}
+
+/* TRUE FINAL VISUAL FIX - keep this block last. */
+body .mcv-premium-page,
+body .mcv-app-clean,
+body .mcv-clean-workspace,
+body .mcv-result-body-clean {
+  background: #f5f7f8 !important;
+  color: #101828 !important;
+}
+
+body .mcv-premium-header,
+body .mcv-clean-topbar {
+  background: rgba(255,255,255,.97) !important;
+  border-bottom: 1px solid #e4e7ec !important;
+  box-shadow: 0 1px 0 rgba(16,24,40,.04) !important;
+}
+
+body .mcv-premium-hero {
+  width: min(1080px, calc(100% - 36px)) !important;
+  min-height: auto !important;
+  margin: 0 auto !important;
+  padding: 70px 0 48px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) 390px !important;
+  gap: 62px !important;
+  align-items: center !important;
+}
+
+body .mcv-premium-copy h1 {
+  max-width: 620px !important;
+  color: #101828 !important;
+  font-size: clamp(44px,5.5vw,66px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: 0 !important;
+}
+
+body .mcv-premium-copy > span {
+  max-width: 560px !important;
+  color: #667085 !important;
+  font-size: 18px !important;
+  line-height: 1.55 !important;
+}
+
+body .mcv-terminal-card,
+body .mcv-premium-steps article,
+body .mcv-compare,
+body .mcv-brand-grid button,
+body .mcv-wizard-premium-shell,
+body .mcv-result-shell-clean,
+body .mcv-saas-summary > div,
+body .mcv-dashboard-intelligence,
+body .mcv-saas-table-card,
+body .mcv-index-card,
+body .mcv-price-range-card,
+body .mcv-lost-card,
+body .mcv-real-comparables-card,
+body .mcv-distribution-card,
+body .mcv-liquidity-card,
+body .mcv-insights-card,
+body .mcv-source-truth-card {
+  background: #fff !important;
+  color: #101828 !important;
+  border: 1px solid #e4e7ec !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 30px rgba(16,24,40,.06) !important;
+}
+
+body .mcv-wizard-heading,
+body .mcv-result-header-clean,
+body .mcv-result-tabs-clean {
+  background: #fff !important;
+  color: #101828 !important;
+  border-color: #e4e7ec !important;
+}
+
+body .mcv-wizard-grid,
+body .mcv-dashboard-premium-grid {
+  background: #f9fafb !important;
+}
+
+body .mcv-wizard-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) 300px !important;
+  gap: 18px !important;
+  padding: 18px !important;
+}
+
+body .mcv-wizard-panel,
+body .mcv-wizard-preview,
+body .mcv-search-strip,
+body .mcv-options-panel,
+body .mcv-color-row,
+body .mcv-brand-grid-premium button,
+body .mcv-type-tabs button,
+body .mcv-chip-group-premium button,
+body .mcv-field-premium input,
+body .mcv-field-premium select,
+body .mcv-search-box-clean,
+body .mcv-real-comparable-item,
+body .mcv-empty-premium,
+body .mcv-insights-card li {
+  background: #fff !important;
+  color: #101828 !important;
+  border: 1px solid #e4e7ec !important;
+  box-shadow: none !important;
+}
+
+body .mcv-type-tabs button.active,
+body .mcv-chip-group-premium button.active,
+body .mcv-brand-grid-premium button.active,
+body .mcv-wizard-step-tabs button.active,
+body .mcv-result-tabs-clean button.active {
+  background: #166f52 !important;
+  color: #fff !important;
+  border-color: #166f52 !important;
+}
+
+body .mcv-dashboard-premium-grid {
+  display: grid !important;
+  grid-template-columns: 260px minmax(0,1fr) !important;
+  gap: 16px !important;
+}
+
+body .mcv-dashboard-topline {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 16px !important;
+}
+
+body .mcv-dashboard-split,
+body .mcv-dashboard-bottom {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 16px !important;
+}
+
+body .mcv-premium-steps {
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  gap: 16px !important;
+}
+
+body .mcv-brand-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+  gap: 14px !important;
+}
+
+body .mcv-brand-grid img,
+body .mcv-brand-grid-premium img,
+body .mcv-vehicle-hero-overlay img,
+body .mcv-vehicle-hero-premium > img {
+  display: none !important;
+}
+
+body .mcv-vehicle-hero-premium {
+  background: linear-gradient(135deg,#eef4f1,#fff) !important;
+  border: 1px solid #e4e7ec !important;
+  border-radius: 16px !important;
+}
+
+body .mcv-vehicle-hero-overlay {
+  background: rgba(255,255,255,.94) !important;
+  color: #101828 !important;
+  border: 1px solid #e4e7ec !important;
+}
+
+body .mcv-terminal-card h2,
+body .mcv-lost-card strong,
+body .mcv-price-band strong,
+body .mcv-saas-summary strong,
+body .mcv-metric-clean strong,
+body .mcv-result-header-clean h2,
+body .mcv-wizard-heading h1,
+body .mcv-step-title-premium h2,
+body .mcv-index-card h3,
+body .mcv-saas-table-card h2 {
+  color: #101828 !important;
+  font-family: inherit !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+body .mcv-terminal-card span,
+body .mcv-terminal-card p,
+body .mcv-terminal-card footer,
+body .mcv-premium-steps p,
+body .mcv-result-header-clean span,
+body .mcv-step-title-premium p,
+body .mcv-wizard-heading span,
+body .mcv-preview-summary p,
+body .mcv-preview-summary small,
+body .mcv-real-comparables-card h3,
+body .mcv-empty-premium p,
+body .mcv-liquidity-card p,
+body .mcv-insights-card p,
+body .mcv-saas-table-card p {
+  color: #667085 !important;
+}
+
+body .mcv-compare table,
+body .mcv-compare th,
+body .mcv-compare td,
+body .mcv-saas-table-card table,
+body .mcv-saas-table-card th,
+body .mcv-saas-table-card td {
+  background: #fff !important;
+  color: #101828 !important;
+  border-color: #e4e7ec !important;
+}
+
+body .mcv-compare th,
+body .mcv-saas-table-card th {
+  background: #f2f4f7 !important;
+  color: #475467 !important;
+}
+
+body .mcv-dashboard-intelligence {
+  grid-template-columns: 1.2fr .8fr .8fr !important;
+}
+
+body .mcv-saas-summary {
+  grid-template-columns: repeat(4,minmax(0,1fr)) !important;
+}
+
+body .mcv-saas-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 16px !important;
+}
+
+body .mcv-premium-footer {
+  background: transparent !important;
+  color: #667085 !important;
+}
+
+@media (max-width: 980px) {
+  body .mcv-premium-hero,
+  body .mcv-wizard-grid,
+  body .mcv-dashboard-premium-grid,
+  body .mcv-dashboard-topline,
+  body .mcv-dashboard-split,
+  body .mcv-dashboard-bottom,
+  body .mcv-dashboard-intelligence,
+  body .mcv-saas-summary,
+  body .mcv-saas-grid {
+    grid-template-columns: 1fr !important;
+  }
+  body .mcv-premium-steps,
+  body .mcv-brand-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body .mcv-premium-copy h1 { font-size: 40px !important; }
+  body .mcv-premium-steps,
+  body .mcv-brand-grid {
+    grid-template-columns: 1fr !important;
   }
 }
