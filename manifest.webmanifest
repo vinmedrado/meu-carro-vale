@@ -1,0 +1,10 @@
+{
+  "name": "Meu Carro Vale",
+  "short_name": "Meu Carro Vale",
+  "description": "Valuation automotivo com mercado real, FIPE e comparáveis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070708",
+  "theme_color": "#070708",
+  "icons": [{ "src": "/brand/favicon.svg", "sizes": "128x128", "type": "image/svg+xml" }]
+}
