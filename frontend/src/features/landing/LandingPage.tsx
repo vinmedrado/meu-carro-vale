@@ -1,62 +1,42 @@
-import { AlertTriangle, ArrowRight, BadgeCheck, BarChart3, CarFront, FileText, Loader2, Scale, ShieldCheck } from 'lucide-react';
+import { AlertTriangle, ArrowRight, BarChart3, BadgeCheck, CarFront, FileText, Loader2, Search, ShieldCheck, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '../../components/ui';
 import { Logo } from '../../components/branding/Logo';
+import { BRAND_FALLBACK_LOGOS, BRAND_LOGOS } from '../../components/vehicle/VehicleHero';
+
+const brands = ['Toyota','Honda','Volkswagen','Chevrolet','Fiat','Jeep','Hyundai','BMW','Ford','Mercedes','Yamaha'];
+const rows = [
+  ['Dados de mercado real', '✅', '❌', 'Parcial'],
+  ['Anúncios ativos', '✅', '❌', '❌'],
+  ['Liquidez regional', '✅', '❌', '❌'],
+  ['Laudo exportável', '✅', '❌', 'Pago'],
+  ['Tendência de preço', '✅', '❌', '❌'],
+];
 
 export function LandingPage({ onDemo, loading = false, error = '' }: { onDemo: () => void; loading?: boolean; error?: string }) {
-  function handleStartDemo() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('refresh_token');
-  onDemo();
-}
+  function start() { localStorage.removeItem('token'); localStorage.removeItem('refresh_token'); onDemo(); }
   return (
-    <main className="mcv-landing-final">
-      <header className="mcv-landing-header"><Logo /><button onClick={handleStartDemo} disabled={loading}>Avaliar meu veículo</button></header>
-      <section className="mcv-landing-hero">
-        <div className="mcv-hero-copy">
-          <p>Seu veículo como um patrimônio</p>
-          <h1>Descubra quanto seu carro realmente vale.</h1>
-          <span>Use dados de mercado, FIPE e comparáveis para negociar com mais segurança.</span>
+    <main className="mcv-premium-page">
+      <header className="mcv-premium-header"><Logo /><button onClick={start} disabled={loading}>Avaliar meu veículo</button></header>
+      <section className="mcv-premium-hero">
+        <div className="mcv-particles" />
+        <motion.div className="mcv-premium-copy" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{duration:.5}}>
+          <p><Sparkles size={16}/> Inteligência automotiva brasileira</p>
+          <h1>Descubra o verdadeiro valor do seu veículo</h1>
+          <span>Inteligência de mercado real — baseada em anúncios ativos, não em tabelas desatualizadas.</span>
           {error ? <div className="mcv-error"><AlertTriangle size={16}/>{error}</div> : null}
-          <div className="mcv-hero-actions"><Button onClick={handleStartDemo} disabled={loading}>{loading ? <Loader2 className="animate-spin" size={16}/> : null} Avaliar meu veículo <ArrowRight size={16}/></Button><a href="#como-funciona">Entender antes de vender</a></div>
-        </div>
-        <LaudoMockup />
+          <div className="mcv-premium-actions"><Button className="shimmer" onClick={start} disabled={loading}>{loading ? <Loader2 className="animate-spin" size={16}/> : null} Avaliar meu veículo agora <ArrowRight size={16}/></Button><a href="#demo">Ver demonstração</a></div>
+        </motion.div>
+        <motion.aside className="mcv-terminal-card" initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}} transition={{duration:.5,delay:.12}}>
+          <div><span>Índice MCV™</span><b>87</b></div><h2>R$ 47.800</h2><p>Preço ideal calculado com comparáveis ativos.</p><i/><section><strong>Venda rápida</strong><em>R$ 44.500</em></section><section><strong>Valor premium</strong><em>R$ 51.200</em></section><footer><BadgeCheck size={16}/> Alta liquidez • Mercado favorável</footer>
+        </motion.aside>
       </section>
 
-      <section id="como-funciona" className="mcv-editorial-section">
-        <div className="mcv-section-title"><p>Antes de vender, entenda o mercado</p><h2>Uma análise para negociar, não apenas consultar preço.</h2></div>
-        <div className="mcv-steps-grid">
-          <Step n="01" title="Informe o veículo" text="Marca, modelo, versão, ano, quilometragem e praça de venda." />
-          <Step n="02" title="Compare com o mercado" text="A plataforma cruza FIPE, anúncios semelhantes e liquidez regional." />
-          <Step n="03" title="Receba o laudo" text="Uma faixa de valor clara, com metodologia e argumentos de negociação." />
-        </div>
-      </section>
-
-      <section className="mcv-editorial-section">
-        <div className="mcv-section-title"><p>Ambientes do produto</p><h2>Valor, mercado e laudo em uma jornada simples.</h2></div>
-        <div className="mcv-product-rooms">
-          <Room icon={<Scale size={16}/>} title="Valor" text="Faixa recomendada para anúncio, venda rápida e negociação." />
-          <Room icon={<BarChart3 size={16}/>} title="Mercado" text="Liquidez, oferta, procura e comportamento regional." />
-          <Room icon={<BadgeCheck size={16}/>} title="Comparáveis" text="Anúncios semelhantes organizados em tabela executiva." />
-          <Room icon={<FileText size={16}/>} title="Laudo" text="Documento profissional para apoiar a tomada de decisão." />
-          <Room icon={<ShieldCheck size={16}/>} title="Negociação" text="Pontos objetivos para defender o valor do veículo." />
-        </div>
-      </section>
-
-      <section className="mcv-proof-section">
-        <PanelMockup />
-        <div>
-          <div className="mcv-section-title"><p>Produto brasileiro</p><h2>Feito para a realidade de venda nacional.</h2></div>
-          <p>O Meu Carro Vale organiza dados de referência, praça, quilometragem e comparáveis em uma leitura clara para proprietários, lojas e consultores automotivos.</p>
-          <Button onClick={handleStartDemo} disabled={loading}>Avaliar meu veículo</Button>
-        </div>
-      </section>
+      <section id="demo" className="mcv-premium-section"><Title label="Como funciona" title="Três passos para vender com mais segurança."/><div className="mcv-premium-steps">{[['01','Identifique','Marca, modelo, versão, ano e região.'],['02','Compare','Cruzamento com FIPE local e anúncios ativos.'],['03','Decida','Preço ideal, venda rápida, premium e laudo.']].map((item,i)=><motion.article key={item[0]} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} transition={{delay:i*.1}}><b>{item[0]}</b><h3>{item[1]}</h3><p>{item[2]}</p></motion.article>)}</div></section>
+      <section className="mcv-premium-section"><Title label="Por que somos diferentes" title="Mais inteligente que qualquer tabela."/><div className="mcv-compare"><table><thead><tr><th></th><th>Meu Carro Vale</th><th>FIPE Tradicional</th><th>Molicar</th></tr></thead><tbody>{rows.map(r=><tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td></tr>)}</tbody></table></div></section>
+      <section className="mcv-premium-section"><Title label="Marcas" title="Comece por uma das marcas mais buscadas."/><div className="mcv-brand-grid">{brands.map((brand)=><button key={brand} onClick={start}>{BRAND_LOGOS[brand] ? <img src={BRAND_LOGOS[brand]} alt={brand} onError={(e) => { e.currentTarget.src = BRAND_FALLBACK_LOGOS[brand] || ''; }}/> : <CarFront/>}<span>{brand}</span></button>)}</div></section>
+      <footer className="mcv-premium-footer"><Logo/><span>Mais inteligente que qualquer tabela.</span><nav><a href="#demo">Como funciona</a><a href="#avaliacao">Avaliar</a></nav></footer>
     </main>
   );
 }
-
-function LaudoMockup() {
-  return <aside className="mcv-laudo-mock"><div><span>Laudo Meu Carro Vale</span><CarFront size={16}/></div><h2>R$ 89.400</h2><p>Valor indicado para negociação</p><i/><section><b>Venda rápida</b><strong>R$ 82.900</strong></section><section><b>Valor competitivo</b><strong>R$ 96.100</strong></section><footer>Boa liquidez regional • 12 comparáveis • confiança 88%</footer></aside>;
-}
-function PanelMockup(){return <div className="mcv-panel-mock"><span>Painel executivo</span><h3>Faixa de Valor</h3><div className="mcv-mock-line"><i/><i/><i/></div><div className="mcv-mock-table"><p><b>FIPE</b><strong>R$ 80.300</strong></p><p><b>Mercado</b><strong>R$ 89.400</strong></p><p><b>Liquidez</b><strong>Alta</strong></p></div></div>}
-function Step({ n, title, text }: { n: string; title: string; text: string }) { return <article className="mcv-step"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>; }
-function Room({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) { return <article className="mcv-room"><span>{icon}</span><h3>{title}</h3><p>{text}</p></article>; }
+function Title({label,title}:{label:string;title:string}){return <div className="mcv-premium-title"><p>{label}</p><h2>{title}</h2></div>}

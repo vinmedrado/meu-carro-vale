@@ -4605,8 +4605,8 @@ body .mcv-vehicle-hero-overlay img {
 }
 
 body .mcv-brand-grid img {
-  width: 46px !important;
-  height: 34px !important;
+  width: 72px !important;
+  height: 38px !important;
   object-fit: contain !important;
 }
 
@@ -4635,8 +4635,8 @@ body .mcv-vehicle-hero-overlay {
 }
 
 body .mcv-vehicle-hero-overlay img {
-  width: 44px !important;
-  height: 34px !important;
+  width: 64px !important;
+  height: 38px !important;
   object-fit: contain !important;
 }
 

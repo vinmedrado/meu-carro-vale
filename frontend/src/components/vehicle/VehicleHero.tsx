@@ -14,7 +14,7 @@ function logo(label: string, accent = '#166F52') {
   return svgData(`<svg xmlns="http://www.w3.org/2000/svg" width="160" height="96" viewBox="0 0 160 96"><rect width="160" height="96" rx="24" fill="#fff"/><rect x="1.5" y="1.5" width="157" height="93" rx="22.5" fill="none" stroke="#E4E7EC" stroke-width="3"/><circle cx="80" cy="42" r="25" fill="#F2F4F7"/><text x="80" y="51" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="${accent}">${initials}</text><text x="80" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#475467">${label}</text></svg>`);
 }
 
-export const BRAND_LOGOS: Record<string, string> = {
+export const BRAND_FALLBACK_LOGOS: Record<string, string> = {
   Toyota: logo('Toyota', '#C1121F'),
   Honda: logo('Honda', '#B42318'),
   Volkswagen: logo('VW', '#1456F0'),
@@ -29,6 +29,21 @@ export const BRAND_LOGOS: Record<string, string> = {
   Renault: logo('Renault', '#B8871D'),
 };
 
+export const BRAND_LOGOS: Record<string, string> = {
+  Toyota: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_carlogo.svg',
+  Honda: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Honda.svg',
+  Volkswagen: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg',
+  Chevrolet: 'https://upload.wikimedia.org/wikipedia/commons/1/16/Chevrolet_logo.svg',
+  Fiat: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Fiat_logo.svg',
+  Jeep: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Jeep_logo.svg',
+  Ford: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg',
+  Hyundai: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Hyundai_Motor_Company_logo.svg',
+  BMW: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
+  Mercedes: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg',
+  Yamaha: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Yamaha_Motor_logo.svg',
+  Renault: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Renault_2021_Text.svg',
+};
+
 export interface VehicleHeroProps { brand: string; model: string; year: number; imageUrl?: string; }
 
 export function VehicleHero({ brand, model, year, imageUrl }: VehicleHeroProps) {
@@ -39,7 +54,7 @@ export function VehicleHero({ brand, model, year, imageUrl }: VehicleHeroProps) 
       <img src={imageUrl || fallback} alt={`${brand} ${model}`} onError={(e) => { e.currentTarget.src = fallback; }} />
       <div className="mcv-vehicle-hero-fallback"><CarFront size={54}/></div>
       <div className="mcv-vehicle-hero-overlay">
-        {logo ? <img src={logo} alt={brand} /> : <CarFront size={24} />}
+        {logo ? <img src={logo} alt={brand} onError={(e) => { e.currentTarget.src = BRAND_FALLBACK_LOGOS[brand] || ''; }} /> : <CarFront size={24} />}
         <strong>{brand} {model}</strong>
         <span>{year}</span>
       </div>
