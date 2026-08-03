@@ -18,6 +18,7 @@ import { downloadExecutiveReportPdf, PORTFOLIO_MODE } from '../../lib/api';
 import { fmtCurrency } from '../../lib/format';
 import { getRecommendedTopPrice } from '../../lib/valuationAccessors';
 import { VehicleHero } from '../../components/vehicle/VehicleHero';
+import { demoPhoto } from '../../data/vehicleDefaults';
 import { exportReportPdf } from './report/PdfExport';
 import { Toast } from './reportSections';
 import { PricingModal } from '../saas/PricingModal';
@@ -193,7 +194,7 @@ function buildCustomerView(result: ValuationResult) {
   const source = cleanCustomerText(v.base_price_source ?? v.data_source ?? (hasMarket ? 'market_real' : fipe > 0 ? 'fipe_local' : 'fallback_estimado'));
   const warning = cleanCustomerText(v.warning ?? v.low_confidence_message ?? (!hasMarket ? 'Estimativa calculada com baixa base de mercado. Use como referência inicial.' : ''));
   const distribution = buildDistribution(comparablesPreview, v.chart, recommended);
-  const heroImage = comparablesPreview.find((item) => item.thumbnail)?.thumbnail;
+  const heroImage = comparablesPreview.find((item) => item.thumbnail)?.thumbnail || demoPhoto(`${result.vehicle.brand} ${result.vehicle.model}`, '#B8871D');
   const hasValidFipe = Number.isFinite(fipe) && fipe > 0;
   const isAboveFipe = hasValidFipe && recommended > fipe;
   const fipeDeltaPct = isAboveFipe ? Math.round(((recommended - fipe) / fipe) * 100) : 0;
@@ -496,7 +497,7 @@ function ComparablesCard({ comparables, summary, hasMarket, expanded = false }: 
         <div className="mcv-real-comparables-list">
           {comparables.map((item, index) => (
             <a key={`${item.title}-${item.price}-${index}`} href={item.link || undefined} target={item.link ? '_blank' : undefined} rel="noreferrer" className="mcv-real-comparable-item">
-              {item.thumbnail ? <img src={item.thumbnail} alt={item.title} /> : <div className="mcv-comparable-placeholder"><CarFront size={22} /></div>}
+              <img src={item.thumbnail || demoPhoto(item.title, index % 2 ? '#166F52' : '#B8871D')} alt={item.title} />
               <div>
                 <strong>{item.title}</strong>
                 <span>{[item.year, fmtKm(item.mileage)].filter(Boolean).join(' • ')}</span>

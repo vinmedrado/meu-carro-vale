@@ -4596,3 +4596,55 @@ body .mcv-lost-card strong {
   font-size: clamp(28px, 3vw, 38px) !important;
   white-space: nowrap !important;
 }
+
+/* Brand and demo vehicle imagery */
+body .mcv-brand-grid img,
+body .mcv-brand-grid-premium img,
+body .mcv-vehicle-hero-overlay img {
+  display: block !important;
+}
+
+body .mcv-brand-grid img {
+  width: 46px !important;
+  height: 34px !important;
+  object-fit: contain !important;
+}
+
+body .mcv-brand-grid button {
+  min-height: 112px !important;
+  gap: 10px !important;
+}
+
+body .mcv-vehicle-hero-premium > img {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+}
+
+body .mcv-vehicle-hero-fallback {
+  display: none !important;
+}
+
+body .mcv-vehicle-hero-overlay {
+  z-index: 2 !important;
+  box-shadow: 0 12px 30px rgba(16,24,40,.12) !important;
+}
+
+body .mcv-vehicle-hero-overlay img {
+  width: 44px !important;
+  height: 34px !important;
+  object-fit: contain !important;
+}
+
+body .mcv-real-comparable-item img {
+  display: block !important;
+  width: 58px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  object-fit: cover !important;
+  background: #f2f4f7 !important;
+}

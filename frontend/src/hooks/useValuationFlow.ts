@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { demoVehicles, initialVehicle } from "../data/vehicleDefaults";
+import { demoPhoto, demoVehicles, initialVehicle } from "../data/vehicleDefaults";
 import {
   autoValuateVehicle,
   loginDemo,
@@ -30,6 +30,7 @@ export function useValuationFlow() {
     const recommended = Math.round(fipe * 1.045);
     const quick = Math.round(recommended * 0.94);
     const premium = Math.round(recommended * 1.052);
+    const heroImage = input.photos?.[0] || demoPhoto(vehicleLabel, "#166F52");
     return {
       vehicle: {
         brand: input.brand || "Chevrolet",
