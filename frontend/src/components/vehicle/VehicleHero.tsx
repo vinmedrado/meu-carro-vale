@@ -30,18 +30,18 @@ export const BRAND_FALLBACK_LOGOS: Record<string, string> = {
 };
 
 export const BRAND_LOGOS: Record<string, string> = {
-  Toyota: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Toyota_carlogo.svg',
-  Honda: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Honda.svg',
-  Volkswagen: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Volkswagen_logo_2019.svg',
-  Chevrolet: 'https://upload.wikimedia.org/wikipedia/commons/1/16/Chevrolet_logo.svg',
-  Fiat: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Fiat_logo.svg',
-  Jeep: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Jeep_logo.svg',
-  Ford: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg',
-  Hyundai: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Hyundai_Motor_Company_logo.svg',
-  BMW: 'https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg',
-  Mercedes: 'https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg',
-  Yamaha: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Yamaha_Motor_logo.svg',
-  Renault: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Renault_2021_Text.svg',
+  Toyota: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/toyota.svg',
+  Honda: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/honda.svg',
+  Volkswagen: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/volkswagen.svg',
+  Chevrolet: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/chevrolet.svg',
+  Fiat: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/fiat.svg',
+  Jeep: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jeep.svg',
+  Ford: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/ford.svg',
+  Hyundai: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/hyundai.svg',
+  BMW: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/bmw.svg',
+  Mercedes: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/mercedes.svg',
+  Yamaha: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/yamahamotorcorporation.svg',
+  Renault: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/renault.svg',
 };
 
 export interface VehicleHeroProps { brand: string; model: string; year: number; imageUrl?: string; }
