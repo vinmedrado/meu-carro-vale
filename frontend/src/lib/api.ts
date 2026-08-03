@@ -1,39 +1,93 @@
-import type { VehicleInput } from '../types';
+import type { VehicleInput } from "../types";
 
-export const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8010';
-const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true';
+const RAW_API_URL = String(import.meta.env.VITE_API_URL || "").trim();
+const API_HOST = (() => {
+  try {
+    return RAW_API_URL ? new URL(RAW_API_URL).hostname : "";
+  } catch {
+    return "";
+  }
+})();
+const isBrowserOnLocalhost =
+  typeof window !== "undefined" &&
+  ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const apiPointsToLocalhost = ["localhost", "127.0.0.1", "0.0.0.0"].includes(API_HOST);
+export const PORTFOLIO_MODE =
+  import.meta.env.VITE_DEMO_MODE === "true" ||
+  !RAW_API_URL ||
+  (apiPointsToLocalhost && !isBrowserOnLocalhost);
+export const API_URL = RAW_API_URL || "http://127.0.0.1:8020";
+const DEMO_MODE = PORTFOLIO_MODE;
 
-export type CatalogBrand = { id: number; vehicle_type: string; canonical_name: string; fipe_code: string; is_active: boolean };
-export type CatalogModel = { id: number; brand_id: number; canonical_name: string; fipe_code: string; is_active: boolean };
-export type CatalogVersion = { id: number; model_id: number; fipe_year_code: string; year: number; fuel: string; version_name: string; fipe_code: string; reference_month: string; fipe_price: number };
+export type CatalogBrand = {
+  id: number;
+  vehicle_type: string;
+  canonical_name: string;
+  fipe_code: string;
+  is_active: boolean;
+};
+export type CatalogModel = {
+  id: number;
+  brand_id: number;
+  canonical_name: string;
+  fipe_code: string;
+  is_active: boolean;
+};
+export type CatalogVersion = {
+  id: number;
+  model_id: number;
+  fipe_year_code: string;
+  year: number;
+  fuel: string;
+  version_name: string;
+  fipe_code: string;
+  reference_month: string;
+  fipe_price: number;
+};
 
 export async function loginUser(email: string, password: string) {
-  const response = await fetch(`${API_URL}/api/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
-  if (!response.ok) throw new Error('E-mail ou senha inválidos');
+  const response = await fetch(`${API_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!response.ok) throw new Error("E-mail ou senha inválidos");
   return response.json();
 }
 
-export async function registerUser(name: string, email: string, password: string, tenantName: string) {
-  const response = await fetch(`${API_URL}/api/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password, tenant_name: tenantName }) });
-  if (!response.ok) { const data = await response.json().catch(() => ({})); throw new Error(data.detail || 'Não foi possível criar a conta'); }
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string,
+  tenantName: string,
+) {
+  const response = await fetch(`${API_URL}/api/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password, tenant_name: tenantName }),
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.detail || "Não foi possível criar a conta");
+  }
   return response.json();
 }
 
 export async function loginDemo() {
   if (DEMO_MODE) {
     return {
-      access_token: 'demo-token',
-      refresh_token: 'demo-refresh-token',
-      token_type: 'bearer',
+      access_token: "demo-token",
+      refresh_token: "demo-refresh-token",
+      token_type: "bearer",
     };
   }
 
   const response = await fetch(`${API_URL}/api/auth/demo`, {
-    method: 'POST',
+    method: "POST",
   });
 
   if (!response.ok) {
-    throw new Error('Não foi possível abrir a demonstração');
+    throw new Error("Não foi possível abrir a demonstração");
   }
 
   return response.json();
@@ -41,28 +95,42 @@ export async function loginDemo() {
 
 export async function valuateVehicle(token: string, vehicle: VehicleInput) {
   const response = await fetch(`${API_URL}/api/vehicles/valuate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(vehicle),
   });
-  if (!response.ok) throw new Error('Não foi possível gerar o valuation');
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    const detail = data?.detail;
+    const message = typeof detail === "string" ? detail : detail?.message;
+    throw new Error(message || "Não foi possível gerar o valuation");
+  }
   return response.json();
 }
 
-export async function fetchCatalogBrands(vehicleType = 'carros') {
-  const response = await fetch(`${API_URL}/api/catalog/brands?vehicle_type=${encodeURIComponent(vehicleType)}`);
+export async function fetchCatalogBrands(vehicleType = "carros") {
+  const response = await fetch(
+    `${API_URL}/api/catalog/brands?vehicle_type=${encodeURIComponent(vehicleType)}`,
+  );
   if (!response.ok) return [] as CatalogBrand[];
   return response.json() as Promise<CatalogBrand[]>;
 }
 
 export async function fetchCatalogModels(brandId: number) {
-  const response = await fetch(`${API_URL}/api/catalog/models?brand_id=${brandId}`);
+  const response = await fetch(
+    `${API_URL}/api/catalog/models?brand_id=${brandId}`,
+  );
   if (!response.ok) return [] as CatalogModel[];
   return response.json() as Promise<CatalogModel[]>;
 }
 
 export async function fetchCatalogVersions(modelId: number) {
-  const response = await fetch(`${API_URL}/api/catalog/versions?model_id=${modelId}`);
+  const response = await fetch(
+    `${API_URL}/api/catalog/versions?model_id=${modelId}`,
+  );
   if (!response.ok) return [] as CatalogVersion[];
   return response.json() as Promise<CatalogVersion[]>;
 }
@@ -97,20 +165,33 @@ function authHeaders(token: string) {
 }
 
 export async function fetchCatalogAdminOverview(token: string) {
-  const response = await fetch(`${API_URL}/api/catalog/admin/overview`, { headers: authHeaders(token) });
-  if (!response.ok) throw new Error('Não foi possível carregar o painel do catálogo');
+  const response = await fetch(`${API_URL}/api/catalog/admin/overview`, {
+    headers: authHeaders(token),
+  });
+  if (!response.ok)
+    throw new Error("Não foi possível carregar o painel do catálogo");
   return response.json() as Promise<CatalogAdminOverview>;
 }
 
-export async function startCatalogFipeSync(token: string, vehicleType = 'carros') {
-  const response = await fetch(`${API_URL}/api/catalog/sync-fipe?vehicle_type=${encodeURIComponent(vehicleType)}`, { method: 'POST', headers: authHeaders(token) });
-  if (!response.ok) throw new Error('Não foi possível iniciar a sincronização FIPE');
+export async function startCatalogFipeSync(
+  token: string,
+  vehicleType = "carros",
+) {
+  const response = await fetch(
+    `${API_URL}/api/catalog/sync-fipe?vehicle_type=${encodeURIComponent(vehicleType)}`,
+    { method: "POST", headers: authHeaders(token) },
+  );
+  if (!response.ok)
+    throw new Error("Não foi possível iniciar a sincronização FIPE");
   return response.json() as Promise<{ message: string; job: CatalogSyncJob }>;
 }
 
 export async function fetchCatalogSyncStatus(token: string, jobId: number) {
-  const response = await fetch(`${API_URL}/api/catalog/sync-status/${jobId}`, { headers: authHeaders(token) });
-  if (!response.ok) throw new Error('Não foi possível consultar o progresso da sincronização');
+  const response = await fetch(`${API_URL}/api/catalog/sync-status/${jobId}`, {
+    headers: authHeaders(token),
+  });
+  if (!response.ok)
+    throw new Error("Não foi possível consultar o progresso da sincronização");
   return response.json() as Promise<CatalogSyncJob>;
 }
 
@@ -130,52 +211,521 @@ export async function searchVehicles(query: string) {
   if (DEMO_MODE) {
     return [
       {
-        brand: 'Chevrolet',
-        model: 'Agile',
-        version: 'LTZ 1.4 Flex',
+        brand: "Chevrolet",
+        model: "Agile",
+        version: "LTZ 1.4 Flex",
         year: 2013,
-        fuel: 'Flex',
-        fipe_code: '004363-5',
+        fuel: "Flex",
+        fipe_code: "004363-5",
         confidence: 96,
-        display_name: 'Chevrolet Agile LTZ 1.4 Flex 2013',
-        source: 'demo',
+        display_name: "Chevrolet Agile LTZ 1.4 Flex 2013",
+        source: "demo",
       },
       {
-        brand: 'Toyota',
-        model: 'Corolla',
-        version: 'XEi 2.0 Flex',
+        brand: "Toyota",
+        model: "Corolla",
+        version: "XEi 2.0 Flex",
         year: 2020,
-        fuel: 'Flex',
-        fipe_code: '002123-2',
+        fuel: "Flex",
+        fipe_code: "002123-2",
         confidence: 95,
-        display_name: 'Toyota Corolla XEi 2.0 Flex 2020',
-        source: 'demo',
+        display_name: "Toyota Corolla XEi 2.0 Flex 2020",
+        source: "demo",
       },
     ].filter((item) =>
-      item.display_name.toLowerCase().includes(query.toLowerCase())
+      item.display_name.toLowerCase().includes(query.toLowerCase()),
     ) as VehicleSuggestion[];
   }
 
   const response = await fetch(
-    `${API_URL}/api/search/vehicles?q=${encodeURIComponent(query)}`
+    `${API_URL}/api/search/vehicles?q=${encodeURIComponent(query)}`,
   );
 
   if (!response.ok) {
-    throw new Error('Motor de dados indisponível no momento.');
+    throw new Error("Motor de dados indisponível no momento.");
   }
 
   return response.json() as Promise<VehicleSuggestion[]>;
 }
 
-export async function autoValuateVehicle(token: string, payload: { query: string; mileage: number; state: string; city: string; condition: string; brand?: string; model?: string; version?: string; year?: number; transmission?: string; fuel?: string; color?: string; options?: string; history?: string; revisions?: string }) {
+export async function autoValuateVehicle(
+  token: string,
+  payload: {
+    query: string;
+    mileage: number;
+    state: string;
+    city: string;
+    condition: string;
+    brand?: string;
+    model?: string;
+    version?: string;
+    year?: number;
+    transmission?: string;
+    fuel?: string;
+    color?: string;
+    options?: string;
+    history?: string;
+    revisions?: string;
+  },
+) {
   const response = await fetch(`${API_URL}/api/vehicles/auto-valuate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(payload),
   });
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    throw new Error(data.detail || 'Não foi possível avaliar com o motor de dados.');
+    const detail = data?.detail;
+    throw new Error(typeof detail === "string" ? detail : detail?.message || "Não foi possível avaliar com o motor de dados.");
   }
   return response.json();
+}
+
+export type MarketImportQualitySource = {
+  source: string;
+  received?: number;
+  valid?: number;
+  rejected?: number;
+  deduplicated?: number;
+  inserted?: number;
+  latest_import?: string | null;
+  total_received?: number;
+  total_valid?: number;
+  total_invalid?: number;
+  total_deduplicated?: number;
+  total_inserted?: number;
+};
+
+export type MarketImportQualitySummary = {
+  total_imports: number;
+  latest_import: string | null;
+  sources_imported: string[];
+  total_received: number;
+  total_valid: number;
+  total_invalid: number;
+  total_deduplicated: number;
+  total_inserted: number;
+  validity_rate: number;
+  dedup_rate: number;
+  quality_score: number;
+  quality_label: string;
+  status: string;
+  human_messages: string[];
+  latest_errors_sample: Array<Record<string, unknown>>;
+  by_source: MarketImportQualitySource[];
+};
+
+export async function fetchMarketImportQuality(token: string) {
+  const response = await fetch(`${API_URL}/api/market/admin/quality/summary`, {
+    headers: authHeaders(token),
+  });
+  if (!response.ok)
+    throw new Error(
+      "Não foi possível carregar a qualidade dos dados de mercado",
+    );
+  return response.json() as Promise<MarketImportQualitySummary>;
+}
+
+function getStoredAccessToken(explicitToken?: string) {
+  return (
+    explicitToken ||
+    localStorage.getItem('token') ||
+    localStorage.getItem('access_token') ||
+    ""
+  );
+}
+
+export async function downloadExecutiveReportPdf(
+  token: string,
+  result: unknown,
+) {
+  const accessToken = getStoredAccessToken(token);
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+  const response = await fetch(`${API_URL}/api/vehicles/report/pdf`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(result),
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    const detail = data?.detail;
+    const message = typeof detail === "string" ? detail : detail?.message;
+    if (response.status === 401) throw new Error("Entre novamente para baixar o relatório.");
+    throw new Error(message || "Não foi possível gerar o relatório PDF");
+  }
+  const blob = await response.blob();
+  const disposition = response.headers.get("Content-Disposition") || "";
+  const match = disposition.match(/filename="?([^";]+)"?/i);
+  const filename = match?.[1] || "meu-carro-vale_relatorio.pdf";
+  return { blob, filename };
+}
+
+export type PlanFeatureMap = {
+  pdf?: boolean;
+  history?: boolean;
+  full_comparables?: boolean;
+  ad_generator?: boolean;
+  api_access?: boolean;
+  weekly_trends?: boolean;
+  priority_support?: boolean;
+};
+
+export type CurrentPlan = {
+  plano: string;
+  plan_id: string;
+  status: string;
+  limite: number;
+  usado: number;
+  restante: number;
+  features: PlanFeatureMap;
+  price_cents: number;
+};
+
+export type PublicPlan = {
+  id: string;
+  nome: string;
+  price_cents: number;
+  currency: string;
+  limite_laudos: number;
+  usuarios: number;
+  features: PlanFeatureMap;
+  descricao: string;
+};
+
+export async function fetchCurrentPlan(token: string) {
+  const response = await fetch(`${API_URL}/api/saas/plano-atual`, { headers: authHeaders(token) });
+  if (!response.ok) throw new Error("Não foi possível carregar o plano atual");
+  return response.json() as Promise<CurrentPlan>;
+}
+
+export async function fetchPlans() {
+  const response = await fetch(`${API_URL}/api/saas/planos`);
+  if (!response.ok) throw new Error("Não foi possível carregar os planos");
+  return response.json() as Promise<PublicPlan[]>;
+}
+
+export async function createBillingCheckout(token: string, planId: string, provider = "pagarme") {
+  const response = await fetch(`${API_URL}/api/saas/billing/checkout`, {
+    method: "POST",
+    headers: { ...authHeaders(token), "Content-Type": "application/json" },
+    body: JSON.stringify({ plan_id: planId, provider }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || "Não foi possível preparar o checkout");
+  return data as Promise<{ provider: string; status: string; message: string; checkout_url?: string; payment_reference?: string; plan_id: string }>;
+}
+
+export async function activatePlanForDev(token: string, planId: string) {
+  const response = await fetch(`${API_URL}/api/saas/billing/activate-dev`, {
+    method: "POST",
+    headers: { ...authHeaders(token), "Content-Type": "application/json" },
+    body: JSON.stringify({ plan_id: planId, provider: "manual" }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || "Não foi possível ativar o plano");
+  return data;
+}
+
+export type AdminFipeLiveJob = {
+  active: boolean;
+  status:
+    | "queued"
+    | "starting"
+    | "running"
+    | "stalled"
+    | "paused_by_rate_limit"
+    | "completed"
+    | "failed"
+    | "unknown"
+    | string;
+  message?: string;
+  mode?: string | null;
+  job_id?: string | null;
+  pid?: number | null;
+  pid_alive?: boolean;
+  started_at?: string | null;
+  last_update_at?: string | null;
+  heartbeat_age_seconds?: number | null;
+  log_age_seconds?: number | null;
+  last_checkpoint?: Record<string, unknown> | null;
+  total_processed?: number;
+  total_429?: number;
+  run_429_count?: number;
+  current_run_429?: number;
+  cumulative_429_count?: number;
+  consecutive_429_count?: number;
+  item_429_attempts?: number;
+  current_delay_seconds?: number | null;
+  rate_limited_items_count?: number;
+  last_rate_limited_path?: string | null;
+  last_skipped_path?: string | null;
+  skipped_due_rate_limit?: number;
+  no_progress_duration_seconds?: number | null;
+  pause_reason?: string | null;
+  pause_reason_detail?: string | null;
+  rate_limit_message?: string | null;
+  lock_status?: string;
+  next_step?: string;
+  stale?: boolean;
+  stale_reasons?: string[];
+  warning?: string | null;
+  log_path?: string | null;
+  updated_at?: string;
+};
+
+export type AdminFipeLiveLogs = {
+  status: string;
+  job_id?: string | null;
+  log_path?: string | null;
+  exists: boolean;
+  tail: number;
+  lines: string[];
+  content: string;
+  updated_at: string;
+};
+
+export type FipeCoverageStatus = {
+  total_versions_in_db: number;
+  last_sync: string | null;
+  coverage_pct: number;
+  api_status: string;
+  recommendation: string;
+};
+
+export type AdminMarketDataJob = {
+  id: number;
+  status: string;
+  started_at: string | null;
+  finished_at: string | null;
+  collected: number;
+  duplicates_skipped: number;
+  invalid_skipped: number;
+  errors: number;
+  error_message?: string;
+};
+
+export type AdminMarketDataStatus = {
+  status: string;
+  total_listings: number;
+  active_listings: number;
+  models_monitored: number;
+  latest_collection: string | null;
+  recent_errors: number;
+  collector_status: string;
+  current_job: AdminMarketDataJob | null;
+};
+
+export type AdminMlStatus = {
+  dataset_size: number;
+  min_for_training: number;
+  ready_for_training: boolean;
+  last_trained: string | null;
+  model_available: boolean;
+  active_sources?: number;
+  message: string;
+};
+
+export type AdminDataOperationsStatus = {
+  status: string;
+  health: string;
+  fipe: {
+    status: string;
+    last_sync?: string | null;
+    mode?: string | null;
+    job_id?: string | null;
+    pid?: number | null;
+    total_processed: number;
+    total_429: number;
+    run_429_count?: number;
+    current_run_429?: number;
+    cumulative_429_count?: number;
+    consecutive_429_count?: number;
+    item_429_attempts?: number;
+    current_delay_seconds?: number | null;
+    rate_limited_items_count?: number;
+    last_rate_limited_path?: string | null;
+    skipped_due_rate_limit?: number;
+    pause_reason?: string | null;
+    next_resume_after?: string | null;
+  };
+  cache: { status: string; hit_rate: number; entries: number };
+  market_imports: {
+    total_reports: number;
+    latest_import?: string | null;
+    latest_source?: string | null;
+    status: string;
+  };
+  warmup: {
+    enabled: boolean;
+    status: string;
+    queue_size: number;
+    modes: string[];
+  };
+  active_job?: Record<string, unknown> | null;
+  live_job?: AdminFipeLiveJob;
+  alerts: string[];
+  updated_at: string;
+};
+
+export async function fetchFipeCoverage() {
+  const response = await fetch(`${API_URL}/api/catalog/fipe-coverage`);
+  if (!response.ok)
+    throw new Error("Não foi possível carregar a cobertura FIPE");
+  return response.json() as Promise<FipeCoverageStatus>;
+}
+
+export async function fetchAdminMarketDataStatus(
+  token: string,
+  signal?: AbortSignal,
+) {
+  const response = await fetch(`${API_URL}/api/admin/market-data/status`, {
+    headers: authHeaders(token),
+    signal,
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok)
+    throw new Error("Não foi possível carregar o status de mercado");
+  return response.json() as Promise<AdminMarketDataStatus>;
+}
+
+export async function startAdminMarketDataCollection(token: string) {
+  const response = await fetch(`${API_URL}/api/admin/collect-market-data`, {
+    method: "POST",
+    headers: authHeaders(token),
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(
+      data.detail || "Não foi possível iniciar a coleta de mercado",
+    );
+  }
+  return response.json() as Promise<{
+    status: string;
+    job_id: number;
+    message: string;
+    collected: number;
+    duplicates_skipped: number;
+    invalid_skipped: number;
+    errors: number;
+  }>;
+}
+
+export async function fetchAdminMlStatus(signal?: AbortSignal) {
+  const response = await fetch(`${API_URL}/api/ml/status`, { signal });
+  if (!response.ok)
+    throw new Error("Não foi possível carregar o status do dataset ML");
+  return response.json() as Promise<AdminMlStatus>;
+}
+
+export async function exportAdminMlDataset(token: string) {
+  const response = await fetch(`${API_URL}/api/admin/export-ml-dataset`, {
+    method: "POST",
+    headers: authHeaders(token),
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.detail || "Não foi possível exportar o dataset ML");
+  }
+  return response.json() as Promise<{
+    status: string;
+    message: string;
+    path?: string;
+    dataset_size?: number;
+    min_for_training?: number;
+  }>;
+}
+
+export async function fetchAdminDataOperationsStatus(token: string) {
+  const response = await fetch(`${API_URL}/api/admin/data-operations/status`, {
+    headers: authHeaders(token),
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok)
+    throw new Error("Não foi possível carregar as operações de dados");
+  return response.json() as Promise<AdminDataOperationsStatus>;
+}
+
+export async function releaseStalledAdminFipeSync(token: string) {
+  const response = await fetch(
+    `${API_URL}/api/admin/fipe-sync/release-stalled`,
+    { method: "POST", headers: authHeaders(token) },
+  );
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(
+      data.detail || "Não foi possível liberar a execução travada",
+    );
+  }
+  return response.json() as Promise<{
+    status: string;
+    message: string;
+    active_job?: Record<string, unknown>;
+  }>;
+}
+
+export async function startAdminFipeSync(
+  token: string,
+  mode: "test" | "incremental" | "historical-safe" | "resume",
+) {
+  const response = await fetch(`${API_URL}/api/admin/fipe-sync/${mode}`, {
+    method: "POST",
+    headers: authHeaders(token),
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(
+      data.detail || "Não foi possível registrar a atualização FIPE",
+    );
+  }
+  return response.json() as Promise<{
+    status: string;
+    message: string;
+    active_job?: Record<string, unknown>;
+  }>;
+}
+
+export async function fetchAdminFipeCurrentJob(
+  token: string,
+  signal?: AbortSignal,
+) {
+  const response = await fetch(`${API_URL}/api/admin/fipe-sync/current-job`, {
+    headers: authHeaders(token),
+    signal,
+  });
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok)
+    throw new Error("Não foi possível carregar o job FIPE atual");
+  return response.json() as Promise<AdminFipeLiveJob>;
+}
+
+export async function fetchAdminFipeCurrentJobLogs(
+  token: string,
+  tail = 100,
+  signal?: AbortSignal,
+) {
+  const response = await fetch(
+    `${API_URL}/api/admin/fipe-sync/current-job/logs?tail=${tail}`,
+    { headers: authHeaders(token), signal },
+  );
+  if (response.status === 403)
+    throw new Error("Acesso restrito ao painel administrativo.");
+  if (!response.ok) throw new Error("Não foi possível carregar os logs FIPE");
+  return response.json() as Promise<AdminFipeLiveLogs>;
 }
