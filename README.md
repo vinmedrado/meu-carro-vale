@@ -6,6 +6,19 @@
 
 ---
 
+## English overview
+
+**Meu Carro Vale** is an automotive valuation and data analytics portfolio project built with **Python, FastAPI, React, TypeScript, PostgreSQL and Docker**. It combines local FIPE reference data, market comparables when available, pricing insights and an exportable report workflow.
+
+**Engineering highlights:** separate API, frontend and data-engine components; documented data flow; backend/data-engine tests; frontend TypeScript production build; GitHub Pages deployment for demonstration.
+
+- [Public demo](https://vinmedrado.github.io/meu-carro-vale/) (demo mode, not a live valuation service)
+- [Continuous integration](https://github.com/vinmedrado/meu-carro-vale/actions/workflows/ci.yml) · [GitHub Pages workflow](https://github.com/vinmedrado/meu-carro-vale/actions/workflows/deploy-github-pages.yml)
+
+> This is a portfolio demonstration. Market data availability varies; demo values are not financial or transactional advice. CI checks are not a substitute for full production security review or manual UX testing.
+
+---
+
 ## Visão geral
 
 A plataforma orienta o usuário por um wizard de avaliação, calcula uma faixa de preço com base em dados disponíveis, exibe um dashboard visual com score, comparáveis e insights, e permite exportar um laudo premium conforme o plano contratado.
@@ -226,6 +239,18 @@ Senha: Demo@123456
 ---
 
 ## Testes
+
+### Evidências de qualidade e segurança (novembro/2026)
+
+O [CI](.github/workflows/ci.yml) executa três verificações independentes: **testes do backend Python**, **testes do data-engine** e **build de produção React/TypeScript**. O deploy no GitHub Pages executa `npm ci`, build em modo demonstrativo e publicação.
+
+- Correção do build com [PR #1](https://github.com/vinmedrado/meu-carro-vale/pull/1), validada pelos três jobs e por testes automatizados em navegador Chrome (desktop 1280×800 e mobile 390×844): landing, entrada na demonstração, relatório, aba Mercado, aba Laudo e indisponibilidade do painel interno quando desativado.
+- Atualização de segurança com [PR #2](https://github.com/vinmedrado/meu-carro-vale/pull/2): Vite atualizado para 8.3.8 e `npm audit` concluído sem vulnerabilidades reportadas na execução de 11/11/2026.
+- Os testes de navegador foram realizados em workflows temporários já removidos. Eles **não** cobrem comparação visual detalhada, fluxos administrativos autenticados nem a geração de PDFs reais.
+
+Para repetir as verificações automatizadas principais, consulte o workflow de CI. A ausência de avisos no `npm audit` é pontual à execução e não garante ausência de falhas futuras.
+
+
 
 Backend:
 
