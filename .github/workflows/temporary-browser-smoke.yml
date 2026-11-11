@@ -1,0 +1,63 @@
+name: Temporary browser smoke checks
+on:
+  push:
+    branches: [chore/ci-frontend-diagnostic-20261111]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci --no-audit --no-fund
+      - name: Install browser test driver for this CI job only
+        working-directory: frontend
+        run: npm install --no-save --ignore-scripts playwright
+      - name: Build demo mode
+        working-directory: frontend
+        env:
+          VITE_DEMO_MODE: "true"
+          VITE_API_URL: ""
+          VITE_SHOW_ADMIN_TOOLS: "false"
+        run: npm run build
+      - name: Run Vite preview
+        working-directory: frontend
+        run: |
+          npm run preview -- --port 4173 > /tmp/mcv-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/mcv-preview.log
+          exit 1
+      - name: Browser smoke on desktop and mobile
+        working-directory: frontend
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({ channel: 'chrome', headless: true });
+          try {
+            for (const viewport of [{width:1280,height:800},{width:390,height:844}]) {
+              const page = await browser.newPage({viewport});
+              const errors = [];
+              page.on('pageerror', e => errors.push(e.message));
+              await page.goto('http://127.0.0.1:4173/', {waitUntil:'networkidle'});
+              await page.locator('body').waitFor({state:'visible'});
+              const text = await page.locator('body').innerText();
+              if (!/Meu Carro Vale|Avalia/i.test(text)) throw new Error('Landing content missing: '+viewport.width);
+              await page.goto('http://127.0.0.1:4173/admin/data-operations', {waitUntil:'networkidle'});
+              const adminText = await page.locator('body').innerText();
+              if (!adminText.includes('Painel administrativo indisponível')) throw new Error('Admin guard missing: '+viewport.width);
+              if (errors.length) throw new Error('Browser errors '+viewport.width+': '+errors.join(' | '));
+              console.log('PASS: public landing + disabled admin route, viewport='+viewport.width+'x'+viewport.height);
+              await page.close();
+            }
+          } finally { await browser.close(); }
+          NODE
