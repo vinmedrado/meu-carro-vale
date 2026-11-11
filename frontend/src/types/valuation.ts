@@ -20,7 +20,36 @@ export type VehicleInput = {
   fipe_code?: string;
 };
 
+export type CustomerValuation = {
+  fipe_price?: number;
+  market_price_estimate?: number;
+  recommended_price?: number;
+  quick_sale_price?: number;
+  premium_sale_price?: number;
+  comparable_count?: number;
+  market_sources?: string[];
+  comparables_preview?: unknown[];
+  confidence_score?: number;
+  liquidity_score?: number;
+  pricing_strategy?: Array<{label: string; value: number; description: string; when_to_use: string}>;
+  confidence_level?: string;
+  liquidity_level?: string;
+  market_stability?: string;
+  valuation_insights?: string[];
+  market_min_price?: number;
+  market_max_price?: number;
+  market_average_price?: number;
+  positioning_summary?: string;
+  trend_direction?: string;
+  trend_strength?: string;
+  trend_summary?: string;
+  sell_timing_signal?: string;
+  vehicle_label?: string;
+  human_summary?: string;
+};
+
 export type ValuationResult = {
+  customer_valuation?: CustomerValuation;
   vehicle: VehicleInput;
   valuation: {
     fipe_simulated: number;
