@@ -8,16 +8,16 @@ A single reference price rarely reflects a specific vehicle's mileage, region an
 
 ## System design
 
-\`\`\`text
+```text
 Vehicle selection → React/TypeScript interface → FastAPI valuation service
                                                     ↓
                                  local FIPE references / available comparables
                                                     ↓
                                       pricing insights → report / PDF
 mcv-data-engine/ → collection and normalization → PostgreSQL / data services
-\`\`\`
+```
 
-The architecture separates \`frontend/\`, \`backend/\` and \`mcv-data-engine/\`. The valuation result communicates reference prices, confidence and alternative price ranges. A public GitHub Pages deployment runs in demonstration mode with illustrative values.
+The architecture separates `frontend/`, `backend/` and `mcv-data-engine/`. The valuation result communicates reference prices, confidence and alternative price ranges. A public GitHub Pages deployment runs in demonstration mode with illustrative values.
 
 ## What this demonstrates
 
