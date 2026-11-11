@@ -1,5 +1,8 @@
 # Meu Carro Vale
 
+**For recruiters:** [Technical case study — English / Español](docs/RECRUITER_CASE_STUDY.md)
+
+
 **Meu Carro Vale** é uma plataforma SaaS de valuation automotivo inteligente para o mercado brasileiro. O produto combina FIPE local-first, dados reais de mercado, comparáveis de anúncios, dashboard premium, laudo PDF e gates de monetização para ajudar usuários a estimar o valor correto de venda de carros com mais clareza e confiança.
 
 > Status: projeto disponível para demonstração local, portfólio técnico e preparação de deploy. Integrações de pagamento permanecem em modo **Pagar.me-ready**, sem cobrança real por padrão.
