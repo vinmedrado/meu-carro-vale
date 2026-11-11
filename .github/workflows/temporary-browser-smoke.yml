@@ -52,6 +52,12 @@ jobs:
               await page.locator('body').waitFor({state:'visible'});
               const text = await page.locator('body').innerText();
               if (!/Meu Carro Vale|Avalia/i.test(text)) throw new Error('Landing content missing: '+viewport.width);
+              await page.getByRole('button', {name: 'Avaliar meu veículo agora'}).click();
+              await page.locator('#relatorio').waitFor({state:'visible',timeout:15000});
+              await page.getByRole('button', {name: 'Mercado', exact: true}).click();
+              await page.getByText('Inteligência de avaliação', {exact:true}).waitFor({timeout:10000});
+              await page.getByRole('button', {name: 'Laudo', exact: true}).click();
+              console.log('PASS: demo login, valuation report, market insights + laudo tab, viewport='+viewport.width);
               await page.goto('http://127.0.0.1:4173/admin/data-operations', {waitUntil:'networkidle'});
               const adminText = await page.locator('body').innerText();
               if (!adminText.includes('Painel administrativo indisponível')) throw new Error('Admin guard missing: '+viewport.width);
